@@ -77,18 +77,100 @@ public:
         ss << "]";
         return ss.str();
     }
+    void clear()
+    {
+        delete[] data;
+        data = new T[5];
+        count = 0;
+        capacity = 5;
+    }
+    T removeAt(int index)
+    {
+        if (index < 0 || index > count)
+            throw std::out_of_range("index out of range");
+        T *newData = new T[count - 1];
+        for (int i = 0; i < index; i++)
+        {
+            newData[i] = this->data[i];
+        }
+        T removeData = data[index];
+        for (int i = index; i < count - 1; i++)
+        {
+            newData[i] = this->data[i + 1];
+        }
+        delete[] data;
+        this->data = newData;
+        count--;
+        return removeData;
+    }
+    bool removeItem(T item)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (data[i] == item)
+            {
+                removeAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
+    // get the element at the index, if the index is out of range, "throw std::out_of_range("index is out of range");"
+    T get(int index)
+    {
+        if (index < 0 || index > count)
+        {
+            throw std::out_of_range("index is out of range");
+        }
+        return this->data[index];
+    }
+    // set the index position in the list with the value e
+    void set(int index, T e)
+    {
+        if (index < 0 || index > count)
+        {
+            throw std::out_of_range("index is out of range");
+        }
+        this->data[index] = e;
+    }
+    // get the first index of item in the list, else return -1
+    int indexOf(T item)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (data[i] == item)
+                return i;
+        }
+        return -1;
+    }
+    bool contains(T item)
+    {
+        return indexOf(item) != -1;
+    }
+    bool empty()
+    {
+        return this->count == 0;
+    }
 };
 int main()
 {
     ArrayList<int> arr;
-    int size = 20;
-
+    int size = 10;
     for (int index = 0; index < size; index++)
     {
-        arr.add(0, index);
+        arr.add(index);
     }
-
     cout << arr.toString() << '\n';
-    cout << arr.size() << '\n';
-    arr.ensureCapacity(5);
+    arr.set(0, 100);
+    cout << arr.get(0) << '\n';
+    cout << arr.toString() << '\n';
+    arr.clear();
+    cout << arr.toString() << '\n';
+    cout << arr.empty() << '\n';
+    for (int index = 0; index < size; index++)
+    {
+        arr.add(index);
+    }
+    cout << arr.indexOf(7) << '\n';
+    cout << arr.contains(15) << '\n';
 }
