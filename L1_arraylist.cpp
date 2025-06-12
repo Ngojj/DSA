@@ -62,21 +62,7 @@ public:
             this->data = newData;
         }
     }
-    string toString()
-    {
-        stringstream ss;
-        ss << "[";
-        for (int i = 0; i < this->count; i++)
-        {
-            ss << data[i];
-            if (i < this->count - 1)
-            {
-                ss << ",";
-            }
-        }
-        ss << "]";
-        return ss.str();
-    }
+
     void clear()
     {
         delete[] data;
@@ -150,6 +136,21 @@ public:
     bool empty()
     {
         return this->count == 0;
+    }
+    string toString()
+    {
+        stringstream ss;
+        ss << "[";
+        for (int i = 0; i < this->count; i++)
+        {
+            ss << data[i];
+            if (i < this->count - 1)
+            {
+                ss << ",";
+            }
+        }
+        ss << "]";
+        return ss.str();
     }
 };
 int main()
